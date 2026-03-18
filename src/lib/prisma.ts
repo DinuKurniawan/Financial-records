@@ -1,4 +1,4 @@
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
@@ -8,12 +8,12 @@ const globalForPrisma = globalThis as unknown as {
 const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error("DATABASE_URL belum diatur di file .env.");
+  throw new Error("DATABASE_URL belum diatur di environment.");
 }
 
 const createPrismaClient = () => {
-  const adapter = new PrismaBetterSqlite3({
-    url: databaseUrl,
+  const adapter = new PrismaPg({
+    connectionString: databaseUrl,
   });
 
   return new PrismaClient({
